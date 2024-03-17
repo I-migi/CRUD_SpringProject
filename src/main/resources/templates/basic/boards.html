@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판</title>
+</head>
+<body>
+<h1>자유게시판</h1>
+<table border="1" width="500">
+    <thead>
+    <tr>
+        <th>번호</th>
+        <th width="40%">제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>조회수</th>
+    </tr>
+    </thead>
+    <tr th:if="${#lists.isEmpty(boards)}">
+        <td colspan="5">게시물이 없습니다.</td>
+    </tr>
+    <tr th:each="board : ${boards}">
+        <td th:text="${board.id}"></td>
+<!--        <td><a th:href="@{/basic/boards(id=${board.id})}" th:text="${board.title}" align="left"></a></td>-->
+        <td><a th:href="@{/basic/boards/{boardId}(boardId=${board.id})}" th:text="${board.title}"></a></td>
+        <td th:text="${board.writer}"></td>
+        <td th:text="${#temporals.format(board.createdDate, 'yyyy.MM.dd HH:mm')}"></td>
+        <td th:text="${board.viewCount}"></td>
+    </tr>
+</table>
+<br><br>
+<button th:onclick="|location.href='@{/basic/boards/addForm}'|">글쓰기</button>
+<!--onclick="location.href='/basic/boards/addForm'"-->
+
+
+
+</body>
+</html>
